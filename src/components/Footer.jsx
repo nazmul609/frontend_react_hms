@@ -13,6 +13,7 @@ const Footer = () => {
           <span className="text-gray-300 mx-2">|</span>
           <a href="/cookies" className="text-gray-300 hover:text-gray-400 mx-2">Cookie Policy</a>
         </div>
+
       </div>
     </footer>
   );
