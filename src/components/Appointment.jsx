@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 
+const doctors = [
+  { id: 10, name: "Dr. John Smith", specialty: "Cardiology" },
+  { id: 21, name: "Dr. Jane Doe", specialty: "Dermatology" },
+  { id: 33, name: "Dr. Jo Willock", specialty: "Cardiology" },
+];
+
 function AppointmentBooking() {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [appointmentDate, setAppointmentDate] = useState(new Date());
@@ -11,15 +17,8 @@ function AppointmentBooking() {
   });
   const [isAppointmentBooked, setIsAppointmentBooked] = useState(false);
 
-  
-  const doctors = [
-    { id: 1, name: "Dr. John Smith", specialty: "Cardiology" },
-    { id: 2, name: "Dr. Jane Doe", specialty: "Dermatology" },
-    { id: 3, name: "Dr. Jo Willock", specialty: "Cardiology" },
-  ];
-
   const handleDoctorSelect = (doctorId) => {
-    setSelectedDoctor(doctors.find((doctor) => doctor.id === doctorId));
+    setSelectedDoctor(doctors.find((doctor) => doctor.id === parseInt(doctorId)));
   };
 
   const handleDateChange = (event) => {
@@ -38,7 +37,7 @@ function AppointmentBooking() {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!selectedDoctor) {
@@ -56,27 +55,54 @@ function AppointmentBooking() {
       return;
     }
 
-    
-    setIsAppointmentBooked(true);
+    const appointmentData = {
+      serialNo: 52, 
+      patientId: 67,
+      doctorId: selectedDoctor.id,
+      appointmentStatus: "booked",
+      appointmentDate: appointmentDate.toISOString().slice(0, 10),
+      appointmentTime: appointmentTime
+    };
 
-    
-    setSelectedDoctor(null);
-    setAppointmentDate(new Date());
-    setAppointmentTime("");
-    setPatientInfo({
-      name: "",
-      contactNumber: "",
-      notes: ""
-    });
+    try {
+      const response = await fetch('http://localhost:8080/appointment/addAppointment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(appointmentData)
+      });
+
+      if (response.ok) {
+        setIsAppointmentBooked(true);
+
+        setSelectedDoctor(null);
+        setAppointmentDate(new Date());
+        setAppointmentTime("");
+        setPatientInfo({
+          name: "",
+          contactNumber: "",
+          notes: ""
+        });
+      } else {
+        console.error('Failed to book appointment');
+      }
+    } catch (error) {
+      console.error('Failed to book appointment:', error);
+    }
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4 text-center mt-20">Book an Appointment</h1>
+      <h1 className="text-3xl font-bold mb-4 text-center mt-10">Book an Appointment</h1>
       {isAppointmentBooked ? (
         <div className="text-center">
           <p className="text-green-600 font-semibold mb-4">Appointment booked successfully!</p>
-          <p>Your appointment with Dr. {selectedDoctor.name} on {appointmentDate.toLocaleDateString()} at {appointmentTime} has been scheduled.</p>
+          {selectedDoctor && (
+            <p>
+              Appointment booked with Dr. {selectedDoctor.name} on {appointmentDate.toLocaleDateString()} at {appointmentTime}.
+            </p>
+          )}
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
@@ -87,7 +113,7 @@ function AppointmentBooking() {
             <select
               id="doctor"
               className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              value={selectedDoctor?.id || ""} 
+              value={selectedDoctor ? selectedDoctor.id : ""} 
               onChange={(e) => handleDoctorSelect(e.target.value)}
             >
               <option value="">Select a Doctor</option>
@@ -170,7 +196,6 @@ function AppointmentBooking() {
       )}
     </div>
   );
-
 }
 
 export default AppointmentBooking;

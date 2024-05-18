@@ -2,33 +2,16 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <header className="flex justify-between items-center py-8 px-4 bg-gray-100 mt-20">
-      <h1 className="text-4xl font-bold text-gray-700">Hello User*</h1>
-      <h2 className="text-xl font-semibold text-gray-700">My Appointments</h2>
+    <header className="flex justify-between items-center py-8 px-4 bg-blue-200 mt-20">
+      <h1 className="text-4xl font-bold text-blue-800">Patient's Profile</h1>
+      <LogoutButton />
     </header>
-  );
-};
-
-const QuickLinks = () => {
-  return (
-    <section className="mt-8">
-      <h2 className="text-xl font-semibold text-gray-700">Quick Links</h2>
-      <div className="flex gap-4 mt-4">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
-          Schedule Appointment
-        </button>
-        <button className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded">
-          Message Doctor
-        </button>
-        
-      </div>
-    </section>
   );
 };
 
 const TableHeader = () => {
   return (
-    <tr className="text-xs font-semibold text-gray-700 bg-gray-100 dark:text-gray-400">
+    <tr className="text-xs font-semibold text-gray-700 bg-gray-200 dark:text-gray-400">
       <th className="px-6 py-4 whitespace-nowrap">Apt. No.</th>
       <th className="px-6 py-4 whitespace-nowrap">Apt. Date</th>
       <th className="px-6 py-4 whitespace-nowrap">Apt. Time</th>
@@ -70,6 +53,7 @@ const AppointmentsTable = () => {
 
   return (
     <section className="mt-8 bg-white shadow rounded-lg overflow-x-auto px-4 py-4">
+      <h2 className="text-xl font-semibold text-gray-700 mb-4 ">My Appointments</h2>
       <table className="min-w-full text-left">
         <thead>
           <TableHeader />
@@ -86,10 +70,9 @@ const AppointmentsTable = () => {
 
 const MyProfile = () => {
   return (
-    <section className="mt-8">
-      <h2 className="text-xl font-semibold text-gray-700 bg-gray-100">My Profile</h2>
+    <section className="mt-8 bg-green-100">
+      <h2 className="text-xl font-semibold text-green-800 bg-green-200">My Profile</h2>
       <div className="grid grid-cols-1 gap-4 mt-4">
-        {/* Add profile details here */}
         <div className="flex justify-between items-center">
           <span className="text-gray-700">Email:</span>
           <span className="text-gray-500">abc@example.com</span>
@@ -98,7 +81,10 @@ const MyProfile = () => {
           <span className="text-gray-700">Phone Number:</span>
           <span className="text-gray-500">(555) 555-5555</span>
         </div>
-       
+        {/* Additional profile details can be added here */}
+        <div className="flex justify-end">
+          <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded">Edit Profile</button>
+        </div>
       </div>
     </section>
   );
@@ -107,9 +93,8 @@ const MyProfile = () => {
 const ChangePassword = () => {
   return (
     <section className="mt-8">
-      <h2 className="text-xl font-semibold text-gray-700">Change Password</h2>
+      <h2 className="text-xl font-semibold text-purple-800">Change Password</h2>
       <div className="grid grid-cols-1 gap-4 mt-4">
-        {/* Add password change form here */}
         <input
           type="password"
           placeholder="Current Password"
@@ -125,7 +110,7 @@ const ChangePassword = () => {
           placeholder="Confirm Password"
           className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
         />
-        <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
+        <button className="bg-purple-500 hover:bg-purple-700 text-white py-2 px-4 rounded">
           Change Password
         </button>
       </div>
@@ -136,9 +121,8 @@ const ChangePassword = () => {
 const Support = () => {
   return (
     <section className="mt-8">
-      <h2 className="text-xl font-semibold text-gray-700">Support</h2>
+      <h2 className="text-xl font-semibold text-yellow-800">Support</h2>
       <div className="mt-4">
-        {/* Add support content here */}
         <p className="text-gray-700">
           For any questions or concerns, please contact our support team at:
         </p>
@@ -150,26 +134,33 @@ const Support = () => {
   );
 };
 
-const Logout = () => {
+const LogoutButton = () => {
+  const handleLogout = () => {
+    // Implement logout functionality
+    console.log('Logged out');
+  };
+
   return (
-    <section className="mt-8 flex justify-end">
-      <button className="text-red-500 hover:text-red-700">Log Out</button>
-    </section>
+    <button
+      onClick={handleLogout}
+      className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded"
+    >
+      Logout
+    </button>
   );
 };
 
-const AppointmentsPage = () => {
+const PatientDashboard = () => {
   return (
-    <div className="container mx-auto px-4 py-16">
+    <div className="container mx-auto px-4 py-4">
       <Header />
-      <QuickLinks />
       <AppointmentsTable />
       <MyProfile />
       <ChangePassword />
       <Support />
-      <Logout />
+      
     </div>
   );
 };
 
-export default AppointmentsPage;
+export default PatientDashboard;

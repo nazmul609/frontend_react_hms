@@ -4,7 +4,7 @@ import React from 'react'
 function LandingPage() {
   return (
     <div className="w-full h-screen pt-2">
-        <div className="textStructure mt-52 px-20">
+        <div className="textStructure mt-20 px-20">
             {["Elevate Efficiency", "Automate Workflow", "Revolutionize Healthcare"].map(
             (item, index) => (
                 <div className="masker">

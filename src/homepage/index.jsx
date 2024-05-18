@@ -1,14 +1,14 @@
 import React from 'react'
-import LandingPage from '../components/LandingPage'
+import LandingPage from './LandingPage'
 import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 
 
 function HomePage() {
   return (
     <div className='w-full h-screen bg-slate-50'>
-        <Navbar/>
         <LandingPage/>
-        
+        <Footer/>
     </div>
   )
 }

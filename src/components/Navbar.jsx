@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <div className='fixed z-[999] w-full px-20 py-8 flex justify-between items-center'>
+    <div className=' z-[999] w-full px-10 py-4 flex justify-between items-center'>
       <Link to="/" className='Logo'>
         <img
           src="https://icons.veryicon.com/png/128/healthcate-medical/medical-care/transfuse.png"
